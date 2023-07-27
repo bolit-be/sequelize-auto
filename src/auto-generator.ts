@@ -269,6 +269,9 @@ export class AutoGenerator {
     // column's attributes
     const fieldAttrs = _.keys(fieldObj);
     fieldAttrs.forEach(attr => {
+      if(attr === 'defaultValue') {
+        return true;
+      }
 
       // We don't need the special attribute from postgresql; "unique" is handled separately
       if (attr === "special" || attr === "elementType" || attr === "unique") {
@@ -316,90 +319,6 @@ export class AutoGenerator {
       } else if (attr === "allowNull") {
         str += space[3] + attr + ": " + fieldObj[attr];
       }
-      // else if (attr === "defaultValue") {
-      //   let defaultVal = fieldObj.defaultValue;
-      //   if (this.dialect.name === "mssql" && defaultVal && defaultVal.toLowerCase() === '(newid())') {
-      //     defaultVal = null as any; // disable adding "default value" attribute for UUID fields if generating for MS SQL
-      //   }
-      //   if (this.dialect.name === "mssql" && (["(NULL)", "NULL"].includes(defaultVal) || typeof defaultVal === "undefined")) {
-      //     defaultVal = null as any; // Override default NULL in MS SQL to javascript null
-      //   }
-
-      //   if (defaultVal === null || defaultVal === undefined) {
-      //     return true;
-      //   }
-      //   if (isSerialKey) {
-      //     return true; // value generated in the database
-      //   }
-
-      //   let val_text = defaultVal;
-      //   if (_.isString(defaultVal)) {
-      //     const field_type = fieldObj.type.toLowerCase();
-      //     defaultVal = this.escapeSpecial(defaultVal);
-
-      //     while (defaultVal.startsWith('(') && defaultVal.endsWith(')')) {
-      //       // remove extra parens around mssql defaults
-      //       defaultVal = defaultVal.replace(/^[(]/, '').replace(/[)]$/, '');
-      //     }
-
-      //     if (field_type === 'bit(1)' || field_type === 'bit' || field_type === 'boolean') {
-      //       // convert string to boolean
-      //       val_text = /1|true/i.test(defaultVal) ? "true" : "false";
-
-      //     } else if (this.isArray(field_type)) {
-      //       // remove outer {}
-      //       val_text = defaultVal.replace(/^{/, '').replace(/}$/, '');
-      //       if (val_text && this.isString(fieldObj.elementType)) {
-      //         // quote the array elements
-      //         val_text = val_text.split(',').map(s => `"${s}"`).join(',');
-      //       }
-      //       val_text = `[${val_text}]`;
-
-      //     } else if (field_type.match(/^(json)/)) {
-      //       // don't quote json
-      //       val_text = defaultVal;
-
-      //     } else if (field_type === 'uuid' && (defaultVal === 'gen_random_uuid()' || defaultVal === 'uuid_generate_v4()')) {
-      //       val_text = "DataTypes.UUIDV4";
-
-      //     } else if (defaultVal.match(/\w+\(\)$/)) {
-      //       // replace db function with sequelize function
-      //       val_text = "Sequelize.Sequelize.fn('" + defaultVal.replace(/\(\)$/g, "") + "')";
-
-      //     } else if (this.isNumber(field_type)) {
-      //       if (defaultVal.match(/\(\)/g)) {
-      //         // assume it's a server function if it contains parens
-      //         val_text = "Sequelize.Sequelize.literal('" + defaultVal + "')";
-      //       } else {
-      //         // don't quote numbers
-      //         val_text = defaultVal;
-      //       }
-
-      //     } else if (defaultVal.match(/\(\)/g)) {
-      //       // embedded function, pass as literal
-      //       val_text = "Sequelize.Sequelize.literal('" + defaultVal + "')";
-
-      //     } else if (field_type.indexOf('date') === 0 || field_type.indexOf('timestamp') === 0) {
-      //       if (_.includes(['current_timestamp', 'current_date', 'current_time', 'localtime', 'localtimestamp'], defaultVal.toLowerCase())) {
-      //         val_text = "Sequelize.Sequelize.literal('" + defaultVal + "')";
-      //       } else {
-      //         val_text = quoteWrapper + defaultVal + quoteWrapper;
-      //       }
-
-      //     } else {
-      //       val_text = quoteWrapper + defaultVal + quoteWrapper;
-      //     }
-      //   }
-
-      //   // val_text = _.isString(val_text) && !val_text.match(/^sequelize\.[^(]+\(.*\)$/)
-      //   // ? self.sequelize.escape(_.trim(val_text, '"'), null, self.options.dialect)
-      //   // : val_text;
-      //   // don't prepend N for MSSQL when building models...
-      //   // defaultVal = _.trimStart(defaultVal, 'N');
-
-      //   str += space[3] + attr + ": " + val_text;
-
-      // }
       else if (attr === "comment" && (!fieldObj[attr] || this.dialect.name === "mssql")) {
         return true;
       } else {
@@ -582,7 +501,7 @@ export class AutoGenerator {
     const fields = _.keys(this.tables[table]);
     return fields.filter((field): boolean => {
       const fieldObj = this.tables[table][field];
-      return fieldObj.allowNull || (!!fieldObj.defaultValue || fieldObj.defaultValue === "") || fieldObj.autoIncrement
+      return fieldObj.allowNull || fieldObj.autoIncrement
         || this.isTimestampField(field);
     });
   }

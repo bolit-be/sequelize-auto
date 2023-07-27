@@ -1,13 +1,12 @@
 const { AutoRelater } = require('../lib/auto-relater');
 
 // Data from mysql version of Northwind sample, with some additional relationships.
-const northwindTableData = { 
+const northwindTableData = {
   tables: {
     order: {
       Id: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: true,
         autoIncrement: true,
         comment: null
@@ -15,7 +14,6 @@ const northwindTableData = {
       OrderDate: {
         type: 'DATETIME',
         allowNull: false,
-        defaultValue: 'CURRENT_TIMESTAMP',
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -23,7 +21,6 @@ const northwindTableData = {
       OrderNumber: {
         type: 'VARCHAR(10)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -31,7 +28,6 @@ const northwindTableData = {
       CustomerId: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -39,7 +35,6 @@ const northwindTableData = {
       TotalAmount: {
         type: 'DECIMAL(12,2)',
         allowNull: true,
-        defaultValue: '0.00',
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -47,7 +42,6 @@ const northwindTableData = {
       Status: {
         type: "ENUM('PROCESSING','SHIPPED','UNKNOWN')",
         allowNull: false,
-        defaultValue: 'UNKNOWN',
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -57,7 +51,6 @@ const northwindTableData = {
       Id: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: true,
         autoIncrement: true,
         comment: null
@@ -65,7 +58,6 @@ const northwindTableData = {
       ProductName: {
         type: 'VARCHAR(50)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -73,7 +65,6 @@ const northwindTableData = {
       SupplierId: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -81,7 +72,6 @@ const northwindTableData = {
       AltSupplierId: {
         type: 'INT(11)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -89,7 +79,6 @@ const northwindTableData = {
       UnitPrice: {
         type: 'DECIMAL(12,2)',
         allowNull: true,
-        defaultValue: '0.00',
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -97,7 +86,6 @@ const northwindTableData = {
       Package: {
         type: 'VARCHAR(30)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -105,7 +93,6 @@ const northwindTableData = {
       IsDiscontinued: {
         type: 'BIT(1)',
         allowNull: false,
-        defaultValue: "b'0'",
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -115,7 +102,6 @@ const northwindTableData = {
       Id: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: true,
         autoIncrement: true,
         comment: null
@@ -123,7 +109,6 @@ const northwindTableData = {
       ProductId: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -131,7 +116,6 @@ const northwindTableData = {
       RelatedProductId: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -141,7 +125,6 @@ const northwindTableData = {
       Id: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: true,
         autoIncrement: true,
         comment: null
@@ -149,7 +132,6 @@ const northwindTableData = {
       OrderId: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -157,7 +139,6 @@ const northwindTableData = {
       ProductId: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -165,7 +146,6 @@ const northwindTableData = {
       UnitPrice: {
         type: 'DECIMAL(12,2)',
         allowNull: false,
-        defaultValue: '0.00',
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -173,7 +153,6 @@ const northwindTableData = {
       Quantity: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: '1',
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -183,7 +162,6 @@ const northwindTableData = {
       Id: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: true,
         autoIncrement: true,
         comment: null
@@ -191,7 +169,6 @@ const northwindTableData = {
       CompanyName: {
         type: 'VARCHAR(40)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -199,7 +176,6 @@ const northwindTableData = {
       ContactName: {
         type: 'VARCHAR(50)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -207,7 +183,6 @@ const northwindTableData = {
       ContactTitle: {
         type: 'VARCHAR(40)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -215,7 +190,6 @@ const northwindTableData = {
       City: {
         type: 'VARCHAR(40)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -223,7 +197,6 @@ const northwindTableData = {
       Country: {
         type: 'VARCHAR(40)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -231,7 +204,6 @@ const northwindTableData = {
       Phone: {
         type: 'VARCHAR(30)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -239,7 +211,6 @@ const northwindTableData = {
       Fax: {
         type: 'VARCHAR(30)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -249,7 +220,6 @@ const northwindTableData = {
       Id: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: true,
         autoIncrement: true,
         comment: null
@@ -257,7 +227,6 @@ const northwindTableData = {
       FirstName: {
         type: 'VARCHAR(40)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -265,7 +234,6 @@ const northwindTableData = {
       LastName: {
         type: 'VARCHAR(40)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -273,7 +241,6 @@ const northwindTableData = {
       City: {
         type: 'VARCHAR(40)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -281,7 +248,6 @@ const northwindTableData = {
       Country: {
         type: 'VARCHAR(40)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -289,7 +255,6 @@ const northwindTableData = {
       Phone: {
         type: 'VARCHAR(20)',
         allowNull: true,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -299,7 +264,6 @@ const northwindTableData = {
       Id: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: true,
         autoIncrement: true,
         comment: null
@@ -307,7 +271,6 @@ const northwindTableData = {
       Name: {
         type: 'VARCHAR(40)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: false,
         autoIncrement: false,
         comment: null
@@ -317,7 +280,6 @@ const northwindTableData = {
       ProductId: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: true,
         autoIncrement: false,
         comment: null
@@ -325,7 +287,6 @@ const northwindTableData = {
       TagId: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: true,
         autoIncrement: false,
         comment: null
@@ -335,7 +296,6 @@ const northwindTableData = {
       ProductId: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: true,
         autoIncrement: false,
         comment: null
@@ -343,7 +303,6 @@ const northwindTableData = {
       TagId: {
         type: 'INT(11)',
         allowNull: false,
-        defaultValue: null,
         primaryKey: true,
         autoIncrement: false,
         comment: null

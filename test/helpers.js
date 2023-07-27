@@ -8,7 +8,7 @@ module.exports = {
   views: false, // true to test generating models from views
 
   isSnakeTables() {
-    // For mysql+innodb on Windows, table names are all lowercase, so we use snake_case to preserve word boundaries 
+    // For mysql+innodb on Windows, table names are all lowercase, so we use snake_case to preserve word boundaries
     // then convert back to UpperCamelCase (PascalCase) for file and class names (history_logs -> HistoryLogs) so tests pass
     const dialect = this.getTestDialect();
     return (dialect == 'mysql');
@@ -23,12 +23,11 @@ module.exports = {
         test.sequelize = sequelize;
         test.User = test.sequelize.define('User', {
           username: { type: Sequelize.STRING },
-          touchedAt: { type: Sequelize.DATE, defaultValue: Sequelize.NOW },
+          touchedAt: { type: Sequelize.DATE },
           aNumber: { type: Sequelize.INTEGER, comment: 'Dev\'s "fix"' },
-          bNumber: { 
-            type: Sequelize.INTEGER, 
-            comment: 'B Numbér',
-            defaultValue: 42
+          bNumber: {
+            type: Sequelize.INTEGER,
+            comment: 'B Numbér'
           },
           validateTest: {
             type: Sequelize.INTEGER,
@@ -45,12 +44,10 @@ module.exports = {
           },
           dateWithDefault: {
             type: Sequelize.DATE,
-            allowNull: false,
-            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+            allowNull: false
           },
           defaultValueBoolean: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: true
+            type: Sequelize.BOOLEAN
           }
         }, {
           schema: dialect == 'postgres' ? 'public' : undefined,

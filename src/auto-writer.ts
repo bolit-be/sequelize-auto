@@ -91,6 +91,7 @@ export class AutoWriter {
     const filePath = path.join(this.options.directory, fileName + (this.options.lang === 'ts' ? '.ts' : '.js'));
 
     const writeFile = util.promisify(fs.writeFile);
+
     return writeFile(path.resolve(filePath), this.tableText[table]);
   }
 

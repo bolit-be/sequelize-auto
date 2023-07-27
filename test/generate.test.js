@@ -143,7 +143,7 @@ describe(helpers.getTestDialectTeaser('sequelize-auto generate'), function() {
         const HistoryLogs = self.sequelize.import ? self.sequelize.import(historyModel) : require(historyModel)(self.sequelize, helpers.Sequelize);
         const tableName = isSnakeTables ? 'history_logs' : 'HistoryLogs';
         expect(HistoryLogs.tableName).to.equal(tableName);
-        expect(HistoryLogs.options.hasTrigger).to.equal(true);      
+        expect(HistoryLogs.options.hasTrigger).to.equal(true);
         ['some Text', '1Number', 'aRandomId', 'id'].forEach(function(field) {
           expect(HistoryLogs.rawAttributes[field], field).to.exist;
         });
@@ -191,7 +191,6 @@ describe(helpers.getTestDialectTeaser('sequelize-auto generate'), function() {
           'validateTest',
           'validateCustom',
           'dateAllowNullTrue',
-          'defaultValueBoolean',
           'id',
           'createdAt',
           'updatedAt'].forEach(function(field) {
@@ -202,11 +201,8 @@ describe(helpers.getTestDialectTeaser('sequelize-auto generate'), function() {
         expect(raw.validateCustom.allowNull).to.be.false;
         expect(raw.dateAllowNullTrue.allowNull).to.be.true;
         expect(raw.dateAllowNullTrue.type).to.match(/time/i);
-        expect(raw.defaultValueBoolean.defaultValue).to.be.equal(dialect == 'mysql' ? 1 : true);
-        expect(raw.bNumber.defaultValue).to.be.equal(42);
-        const dateDefault = JSON.stringify(raw.dateWithDefault.defaultValue);
         const databaseMajorVersion = +((self.sequelize.options.databaseVersion || '').split('.')[0]);
-        expect(dateDefault).to.be.equal(dialect == 'mssql' ? '{"fn":"getdate","args":[]}' : 
+        expect(dateDefault).to.be.equal(dialect == 'mssql' ? '{"fn":"getdate","args":[]}' :
           (dialect == 'postgres' && databaseMajorVersion < 10) ? '{"fn":"now","args":[]}' :
           '{"val":"CURRENT_TIMESTAMP"}');
         done();
@@ -236,7 +232,7 @@ describe(helpers.getTestDialectTeaser('sequelize-auto generate'), function() {
         done(err);
       }
     });
-    
+
     it('the Users model CRUD', function(done) {
       try {
         const users = path.join(testConfig.directory, 'Users');
@@ -260,7 +256,6 @@ describe(helpers.getTestDialectTeaser('sequelize-auto generate'), function() {
             expect(jane.username).to.be.equal('janedoe');
             expect(jane.validateTest).to.be.equal(888888888);
             expect(jane.dateWithDefault).to.be.greaterThan(yesterday);
-            expect(jane.defaultValueBoolean).to.be.equal(true);
             done();
           });
         }).catch(function(err) {
